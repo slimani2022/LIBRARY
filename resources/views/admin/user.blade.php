@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head> 
+   @include('admin.css')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+   <style type="text/css">
+     
+    .div_center
+    {
+      text-align: center;
+      margin: auto;
+    }
+
+    .cat_label
+    {
+      font-size: 30px;
+      font-weight: bold;
+      padding: 30px;
+      color: white;
+    }
+
+
+    .center 
+    {
+
+      margin: auto;
+      width: 50%;
+      text-align: center;
+      margin-top: 50px;
+      border: 1px solid white;
+    }
+
+    th 
+    {
+      background-color: skyblue;
+      padding: 10px;
+    }
+
+    tr 
+    {
+      border: 1px solid white;
+
+    }
+
+
+   </style>
+
+
+  </head>
+  <body>
+    @include('admin.header')
+    <div class="d-flex align-items-stretch">
+      <!-- Sidebar Navigation-->
+      @Include('admin.sidebar')
+      <!-- Sidebar Navigation end-->
+     <div class="page-content">
+        <div class="page-header">
+          <div class="container-fluid">
+
+            <div class="div_center">
+
+
+              <div>
+                
+                @if(session()->has('message'))
+
+                <div class="alert alert-success">
+
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                  
+                  {{session()->get('message')}}
+
+
+
+                </div>
+                
+
+                @endif
+
+              </div>
+              
+
+ <h1 class="cat_label">ALL USERS  <a class="btn btn-info" href="add_user">Add Users</a></h1>
+
+
+         
+                <span style="padding-right: 15px;">
+
+                </span>
+
+            
+
+
+              <div>
+                
+                <table class="">
+                  
+                  <tr>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>address</th>
+                    <th>usertype</th>
+                    <th>Action</th>
+                  </tr>
+
+                  @foreach($user as $user)
+
+                  <tr>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->phone}}</td>
+                    <td>{{$user->address}}</td>
+                    <td>{{$user->usertype}}</td>
+                    <td>
+
+
+
+                      <a onclick="confirmation(event)" class="btn btn-danger" href="{{url('user_delete',$user->id)}}">Delete</a>
+
+
+                    </td>
+                  </tr>
+
+                  @endforeach
+
+                </table>
+
+
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+        </div>
+       </div>
+
+
+
+       @include('admin.footer')
+
+       <script type="text/javascript">
+         
+        function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');  
+        console.log(urlToRedirect); 
+       
+      swal({
+            title: "Are you sure to Delete this",
+            text: "You will not be able to revert this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+
+        .then((willCancel) => {
+            if (willCancel) {
+       
+                window.location.href = urlToRedirect;
+               
+            }  
+
+
+        });
+
+        
+    }
+
+       </script>
+
+  </body>
+</html>
